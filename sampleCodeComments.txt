@@ -1,0 +1,23 @@
+//Comments by @core310
+
+	ORG 10//program start
+inputvar, SKI       // look for input
+    BUN inputvar   // Assign inputvar to Branch, unconditionally
+    CLA       // clear AC
+    INP       // input to AC, put INP to inputvar
+    ADD var   //AC = AC + M[var];
+    OUT       // prints whatever is in register
+
+    HLT       // declare variables
+//After HLT only variable names
+var, DEC 2   // Stores decimal number 2, equivalnt to `int var = 2`
+   
+
+
+
+
+
+//always at the EOF
+    END       // kills program
+
+

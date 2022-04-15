@@ -1,4 +1,4 @@
-    ORG 10
+    ORG 20
 FST, SKI       // look for input
     BUN FST   // no input
     CLA       // clear AC
