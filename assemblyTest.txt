@@ -1,0 +1,10 @@
+    ORG 10
+FST, SKI       // look for input
+    BUN FST   // no input
+    CLA       // clear AC
+    INP       // input to AC
+    ADD ECH
+    OUT       // output char
+    HLT       // quit
+ECH, DEC 3
+    END       // End of the program
