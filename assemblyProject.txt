@@ -1,0 +1,49 @@
+    ORG 10
+FST, SKI       // look for input
+    BUN FST   // no input
+    CLA       // clear AC
+    INP       // input to AC
+STA NUM //Store input to NUM
+STA COUNTER //Store input to COUNTER
+CMA //Complement AC
+STA CTR //Save complemented AC as CTR (for multiplication)
+
+
+LOOP, LDA COUNTER
+
+MULTIPLY, CLE //Multiplication "loop"
+LDA COUNTER //Load number to be multiplied
+CIR //Transfer bit to E
+STA COUNTER //Save rotated
+SZE //Check if E is 0
+BUN ONE //If bit is one, go to one
+BUN ZERO //If bit is zero, go to zero
+
+ONE, LDA NUM //If E bit was one
+ADD P //Add partial
+STA P //Store partial
+CLE //Clear E
+
+ZERO, LDA NUM //Load Multiplicand if E bit was zero
+CIL //Circular shift left
+STA NUM 
+ISZ CTR //Increment counter
+BUN LOOP //If counter is not zero, repeat
+
+
+LDA COUNTER
+
+ADD NEGONE
+SZE
+BUN LOOP
+
+LDA NUM
+    OUT       // output char
+    HLT       // quit
+NUM, DEC 0   // Stores decimal number 2
+COUNTER, DEC 0
+P, HEX 0
+CTR, DEC -8 //Second counter (for multiplication)
+NEGONE, DEC -1
+
+    END       // End of the program

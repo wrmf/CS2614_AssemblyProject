@@ -1,0 +1,40 @@
+Load memory location 0
+
+Look for input
+
+Loop until input
+
+Clear AC
+
+Input to AC
+
+Save AC to INPUT
+
+Load counter to CA
+
+Take the two's complement of AC (counter)
+
+Save AC to COUNTER
+
+Load INPUT to COUNTER
+
+Loop (function):
+	Inc Skip on Zero COUNTER
+	MULTIPLY FINISHED * INPUT (use Left Shift)
+	Add INPUT and NEGONE
+	Skip on Zero, call function again
+	
+Convert to Hex
+
+Output
+
+
+Variables
+
+COUNTER = 0
+INPUT = 0
+NEGONE = -1
+FINISHED
+
+END
+

@@ -1,0 +1,15 @@
+/To add two numbers
+    ORG 100 /Program starts at addr 100
+    LDA A
+    ADD B
+    STA C /Store result
+	TEST, ADD D
+	OUT
+	BUN TEST
+    HLT
+
+A,  DEC 83
+B,  DEC -23
+C,  DEC 0
+D, DEC 1
+    END
