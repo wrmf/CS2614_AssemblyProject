@@ -1,0 +1,17 @@
+
+    	ORG 0 /Program starts at addr 100
+    	LDA B
+    	ADD Y
+    	STA B
+	CLA
+	CIL
+	ADD A
+	ADD X
+	
+    HLT
+
+A,  DEC 83
+B,  DEC -23
+C,  DEC 0
+D, DEC 1
+    END
