@@ -3,41 +3,79 @@ FST, SKI       // look for input
     BUN FST   // Repeat until input
     CLA       // clear AC
     INP       // input to AC
-STA NUMBER // Store input to NUMBER
+ADD HEX-30
+STA Number // Store input to NUMBER
 STA Multiplier //Store multiplier
 
-SZA BUN NotZeroCase //Jump to not zero case if input is not zero
+SZA 
+Hotdog, BUN NotZeroCase //Jump to not zero case if input is not zero
+
 BUN ZeroCase //Jump to zero case if input is zero
 
 NotZeroCase, ADD Dec-1
-SZA BUN NotOneCase //Jump to not zero case if input is greater than one
+SZA 
+BUN NotOneCase //Jump to not zero case if input is greater than one
 BUN ZeroCase //Jump to zero case if input is one
 
 NotOneCase, ADD Dec-1
-SZA BUN NotTwoCase //Jump to not zero case if input is greater than two
-BUN ZeroCase //Jump to zero case if input is two
+SZA 
+BUN NotTwoCase //Jump to not zero case if input is greater than one
+BUN ZeroCase //Jump to zero case if input is one
 
-NotTwoCase, LDA NUMBER
-ADD NUMBER
-ADD NUMBER
-STA NUMBER
+NotTwoCase, STA LoopCounter
+STA MultiplicationCounter
+BUN Loop
 
+Loop, LDA LoopCounter
+STA MultiplicationCounter
 
-ZeroCase, LDA NUMBER //If input number was zero or one
+MultiplicationLoop, LDA Number
+ADD Multiplier
+STA Number
+LDA MultiplicationCounter
+ADD DEC-1 //Decrement
+STA MultiplicationCounter
+SZA 
+BUN MultiplicationLoop //Exit multiplication loop if counter is 0
+
+LDA LoopCounter
+ADD DEC-1
+STA LoopCounter //Decrement outside loop counter
+
+SZA 
+BUN Continue
+BUN Convert //Exit
+
+Continue, LDA Number
+STA Multiplier
+CLA
+STA Number
+LDA LoopCounter
+SZA 
+BUN Loop
+
+ZeroCase, LDA Number //If input number was zero or one
 AND OOOF
 ADD HEX30
 OUT
-    HLT       // quit
-LOOPCOUNTER, DEC 0
+BUN HLT
+
+Convert, LDA Number
+ADD HEX30
+OUT
+
+HLT, HLT       // quit
+LoopCounter, DEC 0
 MultiplicationCounter, DEC 0
 Multiplier, DEC 0
-NUMBER, DEC 0   // Stores decimal number
+Number, DEC 0   // Stores decimal number
 Dec-1, DEC -1 //Decimal -1 for decrementing
 Dec1, DEC 1 //Decimal 1 for incrementing
 OFOO, HEX 0F00 //Hex version of 0000111100000000 for addition (getting nibble)
 OOFO, HEX 00F0 //Hex version of 0000000011110000 for addition (getting nibble)
 OOOF, HEX 000F //Hex version of 0000000000001111 for addition (getting nibble)
 HEX30, HEX 30 //Hex 30 (for getting the correct ASCII character for < 10)
+HEX-30, HEX -30 //Hex -30 (for getting the correct ASCII character for < 10)
 HEX41, HEX 41 //Hex 41 (for getting the correct ASCII character for > 9)
 HEX-A, HEX -A //Hex -A (for getting the correct ASCII character for > 9)
     END       // End of the program
