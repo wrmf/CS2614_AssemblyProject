@@ -60,84 +60,144 @@ ADD HEX30
 OUT
 BUN HLT
 
-Convert, LDA Number
+Convert, LDA Number //Load factorial number
 
-AND OFOO
-CLE
+AND OFOO //isolate one nibble
+CLE //Clear E bit (so it doesn't interfere with rotation)
+CIR //R-shift 8 times to get the nibble over to the right side
 CIR
 CIR
 CIR
-CIR
-CIR
-CIR
-CIR
-CIR
-ADD DEC-10
-SNA
-BUN under10First
-BUN above9First
-
-under10First, ADD DEC10
-ADD HEX30
-OUT
-BUN secondConvert
-
-above9First, ADD DEC10
-ADD HEX41
-ADD HEX-A
-OUT
-BUN secondConvert
-
-secondConvert, LDA Number
-AND OOFO
-CLE
 CIR
 CIR
 CIR
 CIR
 
-ADD DEC-10
-SNA
-BUN under10Second
-BUN above9Second
+STA TEMP //The digit that is decremented to deal with if it is <10 or >9
+STA DIGIT //Digit (does not get changed in counter stuff)
 
-under10Second, ADD DEC10
-ADD HEX30
-OUT
-BUN thirdConvert
+SZA 
+BUN loopFirst //If the digit is > 0
+BUN under10First //If the digit is 0
 
-above9Second, ADD DEC10
-ADD HEX41
-ADD HEX-A
-OUT
-BUN thirdConvert
+loopFirst, ADD DEC-1 //Decrement actual number
+STA TEMP
+LDA CTR //Load counter
+ADD DEC-1 //Decrement counter
+STA CTR //Store counter
+SZA 
+BUN contLoopFirst //Continue loop if counter != 0
+BUN above9First //End loop if counter is 0
 
-thirdConvert, LDA Number
-AND OOOF
+contLoopFirst, LDA TEMP //Load temp
+SZA 
+BUN loopFirst //Continue looping if temp != 0
+BUN under10First //End loop if temp is 0
 
-ADD DEC-10
-SNA
-BUN under10Third
-BUN above9Third
+under10First, LDA DIGIT //Load digit (if digit is under 10)
+ADD HEX30 //Add 30 to get the correct ascii character
+OUT //Print
+BUN secondConvert //Continue
 
-under10Third, ADD DEC10
-ADD HEX30
-OUT
-BUN HLT
+above9First, LDA DIGIT //Load digit (if digit is above 30)
+ADD HEX41 //Add 41 to get the "correct" ascii character
+ADD HEX-A //Subtract A to get the actual correct ascii character
+OUT //Print
+BUN secondConvert //Continue
 
-above9Third, ADD DEC10
-ADD HEX41
-ADD HEX-A
-OUT
-BUN HLT
+secondConvert, LDA Number //Load number
+AND OOFO //Isolate nibble
+CLE //Clear E bit
+CIR //Rotate to bring nibble to right side
+CIR
+CIR
+CIR
+
+STA TEMP //The digit that is decremented to deal with if it is <10 or >9
+STA DIGIT //Digit (does not get changed in counter stuff)
+
+LDA DEC10 //Load 10
+STA CTR //Reset counter
+LDA TEMP //Reload temp
+
+SZA 
+BUN loopSecond //If the digit is > 0
+BUN under10Second //If the digit is 0
+
+loopSecond, ADD DEC-1 //Decrement actual number
+STA TEMP
+LDA CTR //Load counter
+ADD DEC-1 //Decrement counter
+STA CTR //Store counter
+SZA 
+BUN contLoopSecond //Continue loop if counter != 0
+BUN above9Second //End loop if counter is 0
+
+contLoopSecond, LDA TEMP //Load temp
+SZA 
+BUN loopSecond //Continue looping if temp != 0
+BUN under10Second //End loop if temp is 0
+
+under10Second, LDA DIGIT //Load digit (if digit is under 10)
+ADD HEX30 //Add 30 to get the correct ascii character
+OUT //Print
+BUN thirdConvert //Continue
+
+above9Second, LDA DIGIT //Load digit (if digit is above 30)
+ADD HEX41 //Add 41 to get the "correct" ascii character
+ADD HEX-A //Subtract A to get the actual correct ascii character
+OUT //Print
+BUN thirdConvert //Continue
+
+thirdConvert, LDA Number //Load number
+AND OOOF //Isolate nibble
+
+STA TEMP //The digit that is decremented to deal with if it is <10 or >9
+STA DIGIT //Digit (does not get changed in counter stuff)
+
+LDA DEC10 //Load 10
+STA CTR //Reset counter
+LDA TEMP //Reload temp
+
+SZA 
+BUN loopThird//If the digit is > 0
+BUN under10Third //If the digit is 0
+
+loopThird, ADD DEC-1 //Decrement actual number
+STA TEMP
+LDA CTR //Load counter
+ADD DEC-1 //Decrement counter
+STA CTR //Store counter
+SZA 
+BUN contLoopThird //Continue loop if counter != 0
+BUN above9Third //End loop if counter is 0
+
+contLoopThird, LDA TEMP //Load temp
+SZA 
+BUN loopThird //Continue looping if temp != 0
+BUN under10Third //End loop if temp is 0
+
+under10Third, LDA DIGIT //Load digit (if digit is under 10)
+ADD HEX30 //Add 30 to get the correct ascii character
+OUT //Print
+BUN HLT //End
+
+above9Third, LDA DIGIT //Load digit (if digit is above 30)
+ADD HEX41 //Add 41 to get the "correct" ascii character
+ADD HEX-A //Subtract A to get the actual correct ascii character
+OUT //Print
+BUN HLT //End
 
 HLT, HLT       // quit
+DIGIT, DEC 0
+CTR, DEC 10
+TEMP, DEC 0
 DEC-10, DEC -10
 DEC10, DEC 10
 LoopCounter, DEC 0
 MultiplicationCounter, DEC 0
 Multiplier, DEC 0
-Number, DEC 0   // Stores decimal number
+Number, DEC 270   // Stores decimal number
 Dec-1, DEC -1 //Decimal -1 for decrementing
 Dec1, DEC 1 //Decimal 1 for incrementing
 OFOO, HEX 0F00 //Hex version of 0000111100000000 for addition (getting nibble)
