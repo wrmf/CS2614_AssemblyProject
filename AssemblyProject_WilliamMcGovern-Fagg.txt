@@ -8,19 +8,19 @@ STA Number // Store input to NUMBER
 STA Multiplier //Store multiplier
 
 SZA 
-Hotdog, BUN NotZeroCase //Jump to not zero case if input is not zero
+BUN NotZeroCase //Jump to not zero case if input is not zero
 
 BUN ZeroCase //Jump to zero case if input is zero
 
 NotZeroCase, ADD Dec-1
 SZA 
 BUN NotOneCase //Jump to not zero case if input is greater than one
-BUN ZeroCase //Jump to zero case if input is one
+BUN oneTwoCase //Jump to zero case if input is one
 
 NotOneCase, ADD Dec-1
 SZA 
 BUN NotTwoCase //Jump to not zero case if input is greater than one
-BUN ZeroCase //Jump to zero case if input is one
+BUN oneTwoCase //Jump to zero case if input is one
 
 NotTwoCase, STA LoopCounter
 STA MultiplicationCounter
@@ -54,7 +54,14 @@ LDA LoopCounter
 SZA 
 BUN Loop
 
-ZeroCase, LDA Number //If input number was zero or one
+ZeroCase, LDA Number //If input number was zero
+AND OOOF
+ADD HEX30
+ADD DEC1 //Add 1 because zero factorial is 1
+OUT
+BUN HLT
+
+OneTwoCase, LDA Number //If input number was one or two
 AND OOOF
 ADD HEX30
 OUT
