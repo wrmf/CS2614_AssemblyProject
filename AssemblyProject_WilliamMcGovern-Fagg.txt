@@ -61,10 +61,79 @@ OUT
 BUN HLT
 
 Convert, LDA Number
+
+AND OFOO
+CLE
+CIR
+CIR
+CIR
+CIR
+CIR
+CIR
+CIR
+CIR
+ADD DEC-10
+SNA
+BUN under10First
+BUN above9First
+
+under10First, ADD DEC10
 ADD HEX30
 OUT
+BUN secondConvert
+
+above9First, ADD DEC10
+ADD HEX41
+ADD HEX-A
+OUT
+BUN secondConvert
+
+secondConvert, LDA Number
+AND OOFO
+CLE
+CIR
+CIR
+CIR
+CIR
+
+ADD DEC-10
+SNA
+BUN under10Second
+BUN above9Second
+
+under10Second, ADD DEC10
+ADD HEX30
+OUT
+BUN thirdConvert
+
+above9Second, ADD DEC10
+ADD HEX41
+ADD HEX-A
+OUT
+BUN thirdConvert
+
+thirdConvert, LDA Number
+AND OOOF
+
+ADD DEC-10
+SNA
+BUN under10Third
+BUN above9Third
+
+under10Third, ADD DEC10
+ADD HEX30
+OUT
+BUN HLT
+
+above9Third, ADD DEC10
+ADD HEX41
+ADD HEX-A
+OUT
+BUN HLT
 
 HLT, HLT       // quit
+DEC-10, DEC -10
+DEC10, DEC 10
 LoopCounter, DEC 0
 MultiplicationCounter, DEC 0
 Multiplier, DEC 0
