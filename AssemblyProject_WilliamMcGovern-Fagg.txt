@@ -1,10 +1,9 @@
-    ORG 10 //Start at memory location 10
+ORG 10 //Start at memory location 10
 FST, SKI       // look for input
-    BUN FST   // Repeat until input
-    CLA       // clear AC
-    INP       // input to AC
+BUN FST   // Repeat until input
+CLA       // clear AC
+INP       // input to AC
 ADD HEX-30
-STA Number // Store input to NUMBER
 STA Multiplier //Store multiplier
 
 SZA 
@@ -12,56 +11,57 @@ BUN NotZeroCase //Jump to not zero case if input is not zero
 
 BUN ZeroCase //Jump to zero case if input is zero
 
-NotZeroCase, ADD Dec-1
+NotZeroCase, ADD Dec-1 //Case if input is not zero
 SZA 
 BUN NotOneCase //Jump to not zero case if input is greater than one
 BUN oneTwoCase //Jump to zero case if input is one
 
-NotOneCase, ADD Dec-1
+NotOneCase, ADD Dec-1 //Case if input is not zero or one
 SZA 
 BUN NotTwoCase //Jump to not zero case if input is greater than one
 BUN oneTwoCase //Jump to zero case if input is one
 
-NotTwoCase, STA LoopCounter
-STA MultiplicationCounter
-BUN Loop
+NotTwoCase, ADD DEC1 //Case if input is not zero, one or two
+STA LoopCounter //Store loop counter
+STA MultiplicationCounter //Store counter for multiplication
+BUN Loop //Start loop
 
-Loop, LDA LoopCounter
-STA MultiplicationCounter
+Loop, LDA LoopCounter //Load loop counter
+STA MultiplicationCounter //Reset multiplication counter
 
-MultiplicationLoop, LDA Number
-ADD Multiplier
-STA Number
-LDA MultiplicationCounter
+MultiplicationLoop, LDA Number //Multiplication loop
+ADD Multiplier //Add the multiplier to number
+STA Number //Store new number
+LDA MultiplicationCounter //Load multiplication counter
 ADD DEC-1 //Decrement
-STA MultiplicationCounter
+STA MultiplicationCounter //store multiplication counter
 SZA 
 BUN MultiplicationLoop //Exit multiplication loop if counter is 0
 
-LDA LoopCounter
-ADD DEC-1
+LDA LoopCounter //Load loop counter
+ADD DEC-1 //Decrement
 STA LoopCounter //Decrement outside loop counter
 
 SZA 
-BUN Continue
+BUN finishFactorial //If not zero, continue
 BUN Convert //Exit
 
-Continue, LDA Number
-STA Multiplier
-CLA
-STA Number
-LDA LoopCounter
+finishFactorial, LDA Number //Load number
+STA Multiplier //Set multiplier to Number
+CLA //Clear AC
+STA Number //Reset Number
+LDA LoopCounter //Load loop counter
 SZA 
-BUN Loop
+BUN Loop //Go back to beginning of loop if counter != 0
 
-ZeroCase, LDA Number //If input number was zero
+ZeroCase, LDA Multiplier //If input number was zero
 AND OOOF
 ADD HEX30
 ADD DEC1 //Add 1 because zero factorial is 1
 OUT
 BUN HLT
 
-OneTwoCase, LDA Number //If input number was one or two
+OneTwoCase, LDA Multiplier //If input number was one or two
 AND OOOF
 ADD HEX30
 OUT
@@ -204,7 +204,7 @@ DEC10, DEC 10
 LoopCounter, DEC 0
 MultiplicationCounter, DEC 0
 Multiplier, DEC 0
-Number, DEC 270   // Stores decimal number
+Number, DEC 0   // Stores decimal number
 Dec-1, DEC -1 //Decimal -1 for decrementing
 Dec1, DEC 1 //Decimal 1 for incrementing
 OFOO, HEX 0F00 //Hex version of 0000111100000000 for addition (getting nibble)
